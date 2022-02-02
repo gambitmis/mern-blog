@@ -1,0 +1,41 @@
+version: '3'
+services:
+   nodejs:
+      image: node:14-alpine
+      #build:
+      #   context: .
+      #   dockerfile: dockerfile
+      restart: unless-stopped
+      stdin_open: true
+      tty: true
+      command: sh
+      volumes:
+        - ./nodejs:/app
+      environment:
+        - MONGO_URI=${MONGO_URI}
+        - BACKEND_PORT=${BACKEND_PORT}
+      ports:
+         - ${BACKEND_PORT}:${BACKEND_PORT}
+   react:
+      image: node:14-alpine
+      #build:
+      #   context: .
+      #   dockerfile: dockerfile
+      restart: unless-stopped
+      stdin_open: true
+      tty: true
+      command: sh
+      volumes:
+        - ./react:/app
+      #environment:
+      #  - MONGO_URI=${MONGO_URI}
+      #  - API_PORT=${API_PORT}
+      ports:
+         - ${FRONTEND_PORT}:${FRONTEND_PORT}
+volumes:
+    db_data:
+
+networks:
+  default:
+    external: true
+    name: projects
