@@ -4,7 +4,7 @@ const Blogs = require("../models/blogs")
 
 exports.create=(req,res)=>{
     const {title,content,author} = req.body
-    const slug = slugify(title)
+    let slug = slugify(title)
 
     //validate
     switch(true){
@@ -19,10 +19,19 @@ exports.create=(req,res)=>{
     //res.json({
       //  data:{title,content,author,slug}
     //})
+
+    console.log(`DEBUG title:${title} content:${content} author:${author} slug:${slug}`)
+
     Blogs.create({title,content,author,slug},(err,blog)=>{
         if(err){
             res.status(400).json({error:"Duplicate Title"})
         }
         res.json(blog)
+    })
+}
+
+exports.getAllBlogs=(req,res)=>{
+    Blogs.find({}).exec((err,blogs)=>{
+        res.json(blogs)
     })
 }
