@@ -1,10 +1,13 @@
 
 const slugify = require("slugify")
 const Blogs = require("../models/blogs")
+const { v4: uuidv4 } = require('uuid');
 
 exports.create=(req,res)=>{
     const {title,content,author} = req.body
     let slug = slugify(title)
+
+    if(!slug)slug=uuidv4();
 
     //validate
     switch(true){
@@ -30,8 +33,17 @@ exports.create=(req,res)=>{
     })
 }
 
+// show all blogs
 exports.getAllBlogs=(req,res)=>{
     Blogs.find({}).exec((err,blogs)=>{
         res.json(blogs)
+    })
+}
+
+// show blog from slug-id
+exports.singleBlog=(req,res)=>{
+    const {slug} = req.params
+    Blogs.findOne({slug}).exec((err,blog)=>{
+        res.json(blog)
     })
 }

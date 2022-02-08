@@ -1,6 +1,7 @@
 import NavBarComponent from "./components/NavbarComponent";
 import axios from "axios"
 import {useState,useEffect} from "react"
+import { Link } from "react-router-dom"
 
 function App() {
   const [blogs,setBlogs] = useState([])
@@ -18,7 +19,17 @@ function App() {
   return (
     <div className="container p-5"> 
         <NavBarComponent/>
-        {JSON.stringify(blogs)}
+        {blogs.map((blog,index)=>(
+          <div className="row" style={{borderBottom:'1px solid silver'}} key={index}>
+              <div className="col pt-3 pb-2">
+                <Link to={`/blog/${blog.slug}`}>
+                <h2>{blog.title}</h2>
+                </Link>
+                <p>{blog.content.substring(0,180)} ...</p>
+                <p className="text-muted">Author: {blog.author} , Published : {new Date(blog.createdAt).toLocaleString()} , Updated: {new Date(blog.updatedAt).toLocaleString()}</p>
+              </div>
+          </div>
+        ))}
     </div>
   );
 }
