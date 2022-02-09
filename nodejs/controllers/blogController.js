@@ -47,3 +47,25 @@ exports.singleBlog=(req,res)=>{
         res.json(blog)
     })
 }
+
+//remove blog
+exports.removeBlog=(req,res)=>{
+    const {slug} = req.params
+    Blogs.findOneAndRemove({slug}).exec((err,blog)=>{
+        if(err) console.log(err)
+        res.json({
+            message: "Delete Blog Complete"
+        })
+    })
+}
+
+//update blog
+exports.updateBlog=(req,res)=>{
+    const {slug} = req.params
+    // send => titile, content, author
+    const {title,content,author} = req.body
+    Blogs.findOneAndUpdate({slug},{title,content,author},{new:true}).exec((err,blog)=>{
+        if(err) console.log(err)
+        res.json(blog)
+    })
+}

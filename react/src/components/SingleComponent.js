@@ -11,6 +11,7 @@ const SingleComponent=(props)=>{
             setBlog(response.data)
         })
         .catch(err=>alert(err))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     return(
         <div className="container p-5">

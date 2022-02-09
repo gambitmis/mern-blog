@@ -11,7 +11,6 @@ const NavBarComponent=()=>{
                 <div className="navbar-nav">
                   <a className="nav-link active" aria-current="page" href="/">Home</a>
                   <a className="nav-link" href="/create">New Blog</a>
-                  <a className="nav-link disabled">Disabled</a>
                 </div>
               </div>
             </div>
