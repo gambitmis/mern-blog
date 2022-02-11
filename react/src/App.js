@@ -3,6 +3,7 @@ import axios from "axios"
 import {useState,useEffect} from "react"
 import { Link } from "react-router-dom"
 import Swal from "sweetalert2";
+import renderHTML from 'react-render-html'
 
 function App() {
   const [blogs,setBlogs] = useState([])
@@ -55,7 +56,7 @@ function App() {
                 <Link to={`/blog/${blog.slug}`}>
                 <h2>{blog.title}</h2>
                 </Link>
-                <p>{blog.content.substring(0,180)} ...</p>
+                <div className="pt-3">{renderHTML(blog.content.substring(0,250))} ...</div>
                 <p className="text-muted">Author: {blog.author} , Published : {new Date(blog.createdAt).toLocaleString()} , Updated: {new Date(blog.updatedAt).toLocaleString()}</p>
                 <Link className="btn btn-outline-success" to={`/blog/update/${blog.slug}`}>Update</Link>&nbsp;
                 <button className="btn btn-outline-danger" onClick={()=>confirmDelete(blog.slug)}>Delete</button>

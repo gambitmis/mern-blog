@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState,useEffect } from "react"
 import NavBarComponent from "./NavbarComponent";
+import renderHTML from 'react-render-html'; 
 
 const SingleComponent=(props)=>{
     const [blog,setBlog] = useState('')
@@ -16,9 +17,13 @@ const SingleComponent=(props)=>{
     return(
         <div className="container p-5">
             <NavBarComponent/>
-            <h1>{blog.title}</h1>
-            <p>{blog.content}</p>
-            <p className="text=muted">Author: {blog.author} , Published : {new Date(blog.createdAt).toLocaleString()} , Updated: {new Date(blog.updatedAt).toLocaleString()}</p>
+            {blog && 
+            <div>
+                <h1>{blog.title}</h1>
+                <div>{renderHTML(blog.content)}</div>
+                <p className="text=muted">Author: {blog.author} , Published : {new Date(blog.createdAt).toLocaleString()} , Updated: {new Date(blog.updatedAt).toLocaleString()}</p>
+            </div>
+            }
         </div>
     )
 }

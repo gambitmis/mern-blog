@@ -1,18 +1,27 @@
 import { useState } from "react";
 import NavBarComponent from "./NavbarComponent";
 import axios from "axios";
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const FormComponent=()=>{
     const [state,setState] = useState({
         title:"",
-        content:"",
+        //content:"",
         author:""
     })
-    const {title,content,author} = state
+    const {title,author} = state
+    
+    const [content,setContent] = useState('')
+
     const inputValue=name=>event=>{
         //console.log(name,"=",event.target.value)
         setState({...state,[name]:event.target.value})
+    }
+
+    const sumbitContent=(event)=>{
+        setContent(event)
     }
 
     const submitForm=(e)=>{
@@ -28,7 +37,8 @@ const FormComponent=()=>{
                 'You create new Blog complete!',
                 'success'
             )
-            setState({...state,title:"",content:"",author:""})
+            setState({...state,title:"",author:""})
+            setContent("")
         })
         .catch(err=>{
           //alert(err.response.data.error)
@@ -54,9 +64,13 @@ const FormComponent=()=>{
                 </div>
                 <div className="form-group">
                     <label>Content</label>
-                    <textarea className="form-control" 
-                        value={content} 
-                        onChange={inputValue("content")} 
+                    <ReactQuill 
+                        theme="snow"
+                        value={content}
+                        onChange={sumbitContent} 
+                        className="pb-5 mb-3"
+                        placeholder="content detail here"
+                        style={{border:'1px solid #666'}}
                     />
                 </div>
                 <div className="form-group pb-2">
