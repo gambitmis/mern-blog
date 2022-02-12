@@ -3,6 +3,7 @@ import App from "./App"
 import FormComponent from "./components/FormComponent"
 import SingleComponent from "./components/SingleComponent"
 import EditComponent from "./components/EditComponent"
+import LoginComponent from "./components/LoginComponent"
 
 const MyRoute=()=>{
     return(
@@ -12,6 +13,7 @@ const MyRoute=()=>{
                 <Route path="/create" exact component={FormComponent}></Route>
                 <Route path="/blog/:slug" exact component={SingleComponent}></Route>
                 <Route path="/blog/update/:slug" exact component={EditComponent}></Route>
+                <Route path="/login" exact component={LoginComponent}></Route>
             </Switch>
         </BrowserRouter>
     )
