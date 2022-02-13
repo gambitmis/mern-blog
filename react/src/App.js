@@ -4,6 +4,7 @@ import {useState,useEffect} from "react"
 import { Link } from "react-router-dom"
 import Swal from "sweetalert2";
 import renderHTML from 'react-render-html'
+import { getToken, getUser } from "./service/authorize";
 
 function App() {
   const [blogs,setBlogs] = useState([])
@@ -35,7 +36,13 @@ function App() {
 
   const deleteBlog=(slug)=>{
     axios
-    .delete(`${process.env.REACT_APP_API}/blog/${slug}`)
+    .delete(`${process.env.REACT_APP_API}/blog/${slug}`,
+      {
+        headers:{
+          authorization:`Bearer ${getToken()}`
+        }
+      }
+    )
     .then(response=>{
       Swal.fire(
         "ByeBye!",
@@ -58,8 +65,15 @@ function App() {
                 </Link>
                 <div className="pt-3">{renderHTML(blog.content.substring(0,250))} ...</div>
                 <p className="text-muted">Author: {blog.author} , Published : {new Date(blog.createdAt).toLocaleString()} , Updated: {new Date(blog.updatedAt).toLocaleString()}</p>
-                <Link className="btn btn-outline-success" to={`/blog/update/${blog.slug}`}>Update</Link>&nbsp;
-                <button className="btn btn-outline-danger" onClick={()=>confirmDelete(blog.slug)}>Delete</button>
+                {
+                  getUser() && (
+                    <div>
+                      <Link className="btn btn-outline-success" to={`/blog/update/${blog.slug}`}>Update</Link>&nbsp;
+                      <button className="btn btn-outline-danger" onClick={()=>confirmDelete(blog.slug)}>Delete</button>
+                    </div>
+                  )
+                }
+                
               </div>
           </div>
         ))}

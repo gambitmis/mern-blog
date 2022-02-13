@@ -4,15 +4,16 @@ import FormComponent from "./components/FormComponent"
 import SingleComponent from "./components/SingleComponent"
 import EditComponent from "./components/EditComponent"
 import LoginComponent from "./components/LoginComponent"
+import AdminRoute from "./AdminRoute"
 
 const MyRoute=()=>{
     return(
         <BrowserRouter>
             <Switch>
                 <Route path="/" exact component={App}></Route>
-                <Route path="/create" exact component={FormComponent}></Route>
+                <AdminRoute path="/create" exact component={FormComponent}></AdminRoute>
                 <Route path="/blog/:slug" exact component={SingleComponent}></Route>
-                <Route path="/blog/update/:slug" exact component={EditComponent}></Route>
+                <AdminRoute path="/blog/update/:slug" exact component={EditComponent}></AdminRoute>
                 <Route path="/login" exact component={LoginComponent}></Route>
             </Switch>
         </BrowserRouter>

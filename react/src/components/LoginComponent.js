@@ -1,9 +1,11 @@
 import NavBarComponent from "./NavbarComponent"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
 import Swal from "sweetalert2"
+import { authenticate, getUser } from "../service/authorize"
+import { withRouter } from "react-router-dom"
 
-const LoginComponent=()=>{
+const LoginComponent=(props)=>{
     const [state,setState] = useState({
         username:"",
         password:""
@@ -21,6 +23,7 @@ const LoginComponent=()=>{
         .post(`${process.env.REACT_APP_API}/login`,{username,password})
         .then(response=>{
             console.log(response)
+            authenticate(response,props.history.push("/create"))
         }).catch(err=>{
             console.log(err.response.data.error)
             Swal.fire(
@@ -30,7 +33,9 @@ const LoginComponent=()=>{
               )
         })
     }
-
+    useEffect(()=>{
+        getUser() && props.history.push("/")
+    },[])
     return(
         <div className="container p-5">
         <NavBarComponent/>
@@ -55,4 +60,4 @@ const LoginComponent=()=>{
         </div>
     )
 }
-export default LoginComponent
+export default withRouter(LoginComponent)
